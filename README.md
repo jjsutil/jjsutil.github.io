@@ -42,3 +42,10 @@ The build picks it up, lists it on `/blog`, and renders it at `/blog/<filename>/
 ## Accessibility notes
 
 The page respects `prefers-reduced-motion` (the canvas paints a single static map, the mock scenes settle into complete still frames), keeps keyboard focus visible, and the project explorer is fully keyboard-navigable (↑/↓).
+
+## Project status
+
+<!-- BOARD-SUMMARY:START -->
+No open issues — the board at `planning/BOARD.md` fills as work takes the normal
+train (issue → plan → PR).
+<!-- BOARD-SUMMARY:END -->
