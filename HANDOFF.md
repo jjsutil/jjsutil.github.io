@@ -17,16 +17,15 @@ Done in this session:
   `src/content/blog/`.
 - QA: 13 automated browser checks (see commit bodies), fresh-agent fidelity review
   PASS with no defects, Lighthouse mobile 98/100/100/100. Evidence in `docs/evidence/`.
-- Bootflower v0.4.0 seeded — **PR #1 is a Draft awaiting the owner** (owner gate:
-  this repo is outside any autonomous-merge scope). Merging it brings the vendored
-  skills/rules/gate into `main`.
+- Bootflower v0.4.0 adopted — PR #1 merged 2026-08-17 with the owner's explicit
+  approval; `bash scripts/check-gates.sh` green on merged `main` (0 blockers,
+  0 warnings). The visual-evidence rule for `src/` is now active.
 
 ## Pending / next
 
-1. **Owner:** review and merge Draft PR #1 (bootflower adoption).
-2. First blog post, whenever there is something to say (frontmatter documented in
+1. First blog post, whenever there is something to say (frontmatter documented in
    README and CONTRIBUTING).
-3. Optional later: RSS, static `/es/` routes for Spanish SEO. Deliberately out of
+2. Optional later: RSS, static `/es/` routes for Spanish SEO. Deliberately out of
    scope now.
 
 ## Notes for the next session
