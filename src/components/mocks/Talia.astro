@@ -1,47 +1,100 @@
 <svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-  <text x="12" y="22" font-size="7" fill="var(--faint)">acoustic mesh</text>
-  <path d="M18 60 C26 32 70 20 112 26 C160 20 200 36 202 56 C198 70 150 74 100 70 C58 74 24 72 18 60 Z" fill="none" stroke="var(--line)"/>
+  <!-- talia, abstracted: three faint points in dark space, sound rippling outward
+       in staggered generations until the point where they meet catches — the
+       detection. One hairline rises from it to the single label. One 10s master
+       timeline: points settle, ripples cross, ignition holds, label lands. -->
 
-  <path d="M30 49 L26 57 L34 57 Z" fill="var(--faint)" opacity=".25"/>
-  <path d="M60 62 L56 70 L64 70 Z" fill="var(--faint)" opacity=".25"/>
-  <path d="M130 60 L126 68 L134 68 Z" fill="var(--faint)" opacity=".25"/>
-  <path d="M170 54 L166 62 L174 62 Z" fill="var(--faint)" opacity=".25"/>
-  <path d="M190 46 L186 54 L194 54 Z" fill="var(--faint)" opacity=".25"/>
+  <circle class="talia-point" cx="38" cy="24" r="2.2" fill="var(--faint)"/>
+  <circle class="talia-point" cx="34" cy="68" r="2.2" fill="var(--faint)"/>
+  <circle class="talia-point" cx="188" cy="44" r="2.2" fill="var(--faint)"/>
 
-  <line class="talia-line" x1="42" y1="60" x2="106" y2="48" stroke="var(--ember)" stroke-width="1.4" stroke-dasharray="90" stroke-dashoffset="90"/>
-  <line class="talia-line-b" x1="88" y1="28" x2="106" y2="48" stroke="var(--ember)" stroke-width="1.4" stroke-dasharray="90" stroke-dashoffset="90"/>
-  <line class="talia-line-c" x1="148" y1="62" x2="106" y2="48" stroke="var(--ember)" stroke-width="1.4" stroke-dasharray="90" stroke-dashoffset="90"/>
+  <circle class="talia-ring talia-ring-a" cx="38" cy="24" r="0" fill="none" stroke="var(--ember)" stroke-width="1.2"/>
+  <circle class="talia-ring talia-ring-b" cx="34" cy="68" r="0" fill="none" stroke="var(--ember)" stroke-width="1.2"/>
+  <circle class="talia-ring talia-ring-c" cx="188" cy="44" r="0" fill="none" stroke="var(--ember)" stroke-width="1.2"/>
 
-  <circle cx="42" cy="60" r="3" fill="var(--paper)"/>
-  <circle cx="88" cy="28" r="3" fill="var(--paper)"/>
-  <circle cx="148" cy="62" r="3" fill="var(--paper)"/>
-  <circle cx="106" cy="48" r="3" fill="var(--rust)"/>
-  <circle class="talia-ping" cx="106" cy="48" r="7" fill="none" stroke="var(--rust)"/>
+  <line class="talia-hairline" x1="118" y1="46" x2="118" y2="18" stroke="var(--rust)"
+    stroke-width="1.4" stroke-linecap="round" pathLength="1" stroke-dasharray="1"/>
 
-  <rect class="talia-bar" x="116" y="42" width="3" height="12" rx="1" fill="var(--rust)" opacity=".85"/>
-  <rect class="talia-bar-b" x="121" y="42" width="3" height="12" rx="1" fill="var(--rust)" opacity=".85"/>
-  <rect class="talia-bar-c" x="126" y="42" width="3" height="12" rx="1" fill="var(--rust)" opacity=".85"/>
-  <rect class="talia-bar-d" x="131" y="42" width="3" height="12" rx="1" fill="var(--rust)" opacity=".85"/>
+  <circle class="talia-ignite" cx="118" cy="46" r="3.4" fill="var(--rust)"/>
 
-  <g class="talia-pop">
-    <rect x="132" y="20" width="80" height="15" rx="4" fill="var(--ink)" stroke="var(--rust)"/>
-    <text x="138" y="31" font-size="8.5" fill="var(--rust)">&#9888; chainsaw 98%</text>
-  </g>
+  <text class="talia-label" x="122" y="21" font-size="8" fill="var(--rust)">98%</text>
+
+  <style>
+    .talia-point, .talia-ring-a, .talia-ring-b, .talia-ring-c,
+    .talia-hairline, .talia-ignite, .talia-label {
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(.4,0,.2,1);
+    }
+
+    /* 0-10%: the three points settle in (setup) */
+    .talia-point { animation-name: taliaPoint; }
+    @keyframes taliaPoint {
+      0%, 6% { opacity: 0; }
+      10%, 100% { opacity: 1; }
+    }
+
+    /* two ripple generations per point, staggered so they converge on the meeting point */
+    .talia-ring-a { animation-name: taliaRingA; }
+    @keyframes taliaRingA {
+      0%, 8% { r: 0; opacity: 0; }
+      13% { opacity: .5; }
+      21%, 25% { r: 30; opacity: 0; }
+      29% { opacity: .38; }
+      37%, 100% { r: 30; opacity: 0; }
+    }
+    .talia-ring-b { animation-name: taliaRingB; }
+    @keyframes taliaRingB {
+      0%, 15% { r: 0; opacity: 0; }
+      20% { opacity: .5; }
+      28%, 32% { r: 30; opacity: 0; }
+      36% { opacity: .38; }
+      44%, 100% { r: 30; opacity: 0; }
+    }
+    .talia-ring-c { animation-name: taliaRingC; }
+    @keyframes taliaRingC {
+      0%, 21% { r: 0; opacity: 0; }
+      26% { opacity: .5; }
+      34%, 38% { r: 26; opacity: 0; }
+      42% { opacity: .38; }
+      50%, 100% { r: 26; opacity: 0; }
+    }
+
+    /* ~54%: ignition — the point where the ripples meet catches, and stays lit */
+    .talia-ignite {
+      animation-name: taliaIgnite, taliaIgniteBreath;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    @keyframes taliaIgnite {
+      0%, 49% { fill: var(--faint); r: 2; opacity: .55; }
+      54% { fill: var(--rust); r: 4.2; opacity: 1; }
+      58%, 96% { fill: var(--rust); r: 3.4; opacity: 1; }
+      100% { fill: var(--rust); r: 3.4; opacity: 0; }
+    }
+    @keyframes taliaIgniteBreath {
+      0%, 58% { transform: scale(1); }
+      74% { transform: scale(1.16); }
+      86% { transform: scale(1); }
+      92% { transform: scale(1.1); }
+      96%, 100% { transform: scale(1); }
+    }
+
+    /* the hairline draws once ignition catches */
+    .talia-hairline { animation-name: taliaHairline; }
+    @keyframes taliaHairline {
+      0%, 56% { stroke-dashoffset: 1; opacity: 0; }
+      60% { opacity: 1; }
+      64%, 96% { stroke-dashoffset: 0; opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* the label lands, holds, soft-fades in the final 4% */
+    .talia-label { animation-name: taliaLabel; }
+    @keyframes taliaLabel {
+      0%, 63% { opacity: 0; }
+      68%, 96% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
 </svg>
-
-<style>
-  @keyframes taliaDash{to{stroke-dashoffset:0}}
-  @keyframes taliaPing{0%{transform:scale(.2);opacity:.9}100%{transform:scale(2.6);opacity:0}}
-  @keyframes taliaBar{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
-  @keyframes taliaPop{0%,10%{opacity:0;transform:scale(.6)}22%,88%{opacity:1;transform:scale(1)}100%{opacity:0}}
-
-  .talia-line{animation:taliaDash 2.6s ease-in-out infinite}
-  .talia-line-b{animation:taliaDash 2.6s .35s ease-in-out infinite}
-  .talia-line-c{animation:taliaDash 2.6s .7s ease-in-out infinite}
-  .talia-ping{transform-box:fill-box;transform-origin:center;animation:taliaPing 2.6s 1.2s ease-out infinite}
-  .talia-bar{transform-box:fill-box;transform-origin:center bottom;animation:taliaBar .5s ease-in-out infinite}
-  .talia-bar-b{transform-box:fill-box;transform-origin:center bottom;animation:taliaBar .59s ease-in-out infinite}
-  .talia-bar-c{transform-box:fill-box;transform-origin:center bottom;animation:taliaBar .68s ease-in-out infinite}
-  .talia-bar-d{transform-box:fill-box;transform-origin:center bottom;animation:taliaBar .77s ease-in-out infinite}
-  .talia-pop{transform-box:fill-box;transform-origin:center;animation:taliaPop 2.6s 1.5s ease infinite}
-</style>

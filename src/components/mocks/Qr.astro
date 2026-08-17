@@ -1,53 +1,74 @@
 <svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-  <!-- finder patterns: reads as a QR code -->
-  <rect x="62" y="10" width="24" height="24" rx="1" fill="none" stroke="var(--paper)" stroke-width="2"/>
-  <rect x="70" y="18" width="8" height="8" fill="var(--paper)"/>
-  <rect x="134" y="10" width="24" height="24" rx="1" fill="none" stroke="var(--paper)" stroke-width="2"/>
-  <rect x="142" y="18" width="8" height="8" fill="var(--paper)"/>
-  <rect x="62" y="50" width="24" height="24" rx="1" fill="none" stroke="var(--paper)" stroke-width="2"/>
-  <rect x="70" y="58" width="8" height="8" fill="var(--paper)"/>
+  <!-- qr: a sparse abstract grid with a quiet finder-corner hint. Missing cells
+       materialize one by one, ember, ease-out, deliberate cadence. On completion
+       the grid breathes once and a label lands. Base attributes render the
+       completed grid for the static/reduced-motion frame. 10s master. -->
 
-  <!-- intact data modules -->
-  <rect x="95" y="19" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="111" y="19" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="127" y="19" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="95" y="35" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="119" y="35" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="143" y="43" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="95" y="51" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="143" y="51" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="111" y="67" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="127" y="67" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="95" y="67" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
-  <rect x="135" y="59" width="6" height="6" rx="1" fill="var(--paper)" opacity=".75"/>
+  <g class="qr-scene">
+    <!-- finder-corner hint, top-left only -->
+    <g class="qr-finder" stroke="var(--faint)" stroke-width="1.2" opacity=".55">
+      <rect x="62" y="10" width="18" height="18" rx="1" fill="none"/>
+      <rect x="67" y="15" width="8" height="8" rx="1" fill="var(--faint)" stroke="none"/>
+    </g>
 
-  <!-- damaged cluster reconstructing cell by cell (Reed-Solomon recovery) -->
-  <rect class="qr-cell" style="animation-delay:0s" x="103" y="35" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:.35s" x="111" y="27" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:.7s" x="119" y="43" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:1.05s" x="127" y="35" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:1.4s" x="103" y="51" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:1.75s" x="135" y="27" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:2.1s" x="119" y="59" width="6" height="6" rx="1" fill="var(--ember)"/>
-  <rect class="qr-cell" style="animation-delay:2.45s" x="103" y="67" width="6" height="6" rx="1" fill="var(--ember)"/>
+    <!-- intact cells, present from the start -->
+    <g class="qr-intact" fill="var(--faint)" opacity=".5">
+      <rect x="95" y="10" width="7" height="7" rx="1"/>
+      <rect x="139" y="10" width="7" height="7" rx="1"/>
+      <rect x="84" y="21" width="7" height="7" rx="1"/>
+      <rect x="106" y="21" width="7" height="7" rx="1"/>
+      <rect x="128" y="21" width="7" height="7" rx="1"/>
+      <rect x="62" y="32" width="7" height="7" rx="1"/>
+      <rect x="95" y="32" width="7" height="7" rx="1"/>
+      <rect x="117" y="32" width="7" height="7" rx="1"/>
+      <rect x="139" y="32" width="7" height="7" rx="1"/>
+      <rect x="73" y="43" width="7" height="7" rx="1"/>
+      <rect x="106" y="43" width="7" height="7" rx="1"/>
+      <rect x="62" y="54" width="7" height="7" rx="1"/>
+      <rect x="117" y="54" width="7" height="7" rx="1"/>
+      <rect x="139" y="54" width="7" height="7" rx="1"/>
+    </g>
 
-  <!-- scanning pass over the grid -->
-  <line class="qr-scan" x1="62" y1="10" x2="158" y2="10" stroke="var(--ember)" stroke-width="1"/>
+    <!-- missing cells, recovered one by one -->
+    <rect class="qr-cell qr-cell-a" x="117" y="10" width="7" height="7" rx="1" fill="var(--ember)"/>
+    <rect class="qr-cell qr-cell-b" x="73" y="32" width="7" height="7" rx="1" fill="var(--ember)"/>
+    <rect class="qr-cell qr-cell-c" x="128" y="32" width="7" height="7" rx="1" fill="var(--ember)"/>
+    <rect class="qr-cell qr-cell-d" x="84" y="43" width="7" height="7" rx="1" fill="var(--ember)"/>
+    <rect class="qr-cell qr-cell-e" x="95" y="43" width="7" height="7" rx="1" fill="var(--ember)"/>
+    <rect class="qr-cell qr-cell-f" x="128" y="54" width="7" height="7" rx="1" fill="var(--ember)"/>
+  </g>
 
-  <!-- byte-level verification readout -->
-  <text class="qr-check" style="animation-delay:0s" x="166" y="22" font-size="7" fill="var(--ok)">byte 0x4F ✓</text>
-  <text class="qr-check" style="animation-delay:.9s" x="166" y="34" font-size="7" fill="var(--ok)">byte 0xA2 ✓</text>
-  <text class="qr-check" style="animation-delay:1.8s" x="166" y="46" font-size="7" fill="var(--ok)">byte 0xC9 ✓</text>
-  <text x="166" y="62" font-size="7" fill="var(--faint)">Reed-Solomon</text>
-  <text x="166" y="71" font-size="7" fill="var(--faint)">recovery</text>
+  <text class="qr-label" x="104" y="78" font-size="8" fill="var(--ok)" text-anchor="middle">recovered</text>
 
   <style>
-    @keyframes qrPop { 0%, 8% { opacity: 0; transform: scale(.5); } 20%, 90% { opacity: 1; transform: scale(1); } 100% { opacity: 1; } }
-    @keyframes qrCheck { 0%, 10% { opacity: 0; } 25%, 100% { opacity: 1; } }
-    @keyframes qrScan { 0% { transform: translateY(0); opacity: .9; } 92% { transform: translateY(56px); opacity: .9; } 100% { transform: translateY(56px); opacity: 0; } }
+    .qr-scene { transform-box: view-box; transform-origin: 104px 34px; animation: qrBreathe 10s cubic-bezier(.4,0,.2,1) infinite; }
+    @keyframes qrBreathe {
+      0%, 71% { transform: scale(1); }
+      75% { transform: scale(1.045); }
+      80%, 100% { transform: scale(1); }
+    }
 
-    .qr-cell { animation: qrPop 3.6s ease infinite; transform-box: fill-box; transform-origin: center; }
-    .qr-check { animation: qrCheck 3.6s ease infinite; }
-    .qr-scan { animation: qrScan 3.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .qr-cell { transform-box: fill-box; transform-origin: center; }
+
+    .qr-cell-a { animation: qrPopA 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopA { 0%, 14% { opacity: 0; transform: scale(.4); } 16% { opacity: 1; transform: scale(1.15); } 19%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-cell-b { animation: qrPopB 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopB { 0%, 24% { opacity: 0; transform: scale(.4); } 26% { opacity: 1; transform: scale(1.15); } 29%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-cell-c { animation: qrPopC 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopC { 0%, 34% { opacity: 0; transform: scale(.4); } 36% { opacity: 1; transform: scale(1.15); } 39%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-cell-d { animation: qrPopD 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopD { 0%, 44% { opacity: 0; transform: scale(.4); } 46% { opacity: 1; transform: scale(1.15); } 49%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-cell-e { animation: qrPopE 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopE { 0%, 54% { opacity: 0; transform: scale(.4); } 56% { opacity: 1; transform: scale(1.15); } 59%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-cell-f { animation: qrPopF 10s cubic-bezier(.2,.8,.3,1) infinite; }
+    @keyframes qrPopF { 0%, 64% { opacity: 0; transform: scale(.4); } 66% { opacity: 1; transform: scale(1.15); } 69%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+
+    .qr-label { animation: qrLabel 10s ease-in-out infinite; }
+    @keyframes qrLabel { 0%, 77% { opacity: 0; } 82%, 96% { opacity: 1; } 100% { opacity: 0; } }
   </style>
 </svg>

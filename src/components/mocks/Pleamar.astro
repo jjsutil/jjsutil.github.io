@@ -1,7 +1,52 @@
-<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="18" cy="14" r="0.8" fill="var(--faint)" opacity=".5"/><circle cx="42" cy="70" r="0.7" fill="var(--faint)" opacity=".4"/><circle cx="190" cy="18" r="0.8" fill="var(--faint)" opacity=".45"/><circle cx="200" cy="66" r="0.7" fill="var(--faint)" opacity=".4"/><circle cx="70" cy="12" r="0.6" fill="var(--faint)" opacity=".35"/><path d="M110 44 Q 150 18 196 34" fill="none" stroke="var(--faint)" stroke-width="1" opacity=".2"/><path d="M110 44 Q 70 70 24 56" fill="none" stroke="var(--faint)" stroke-width="1" opacity=".2"/><ellipse cx="110" cy="44" rx="22" ry="7" fill="none" stroke="var(--faint)" stroke-dasharray="2 4" opacity=".3"/><g class="pleamar-orbit" style="--a:40deg;transform:rotate(40deg);animation:pleamarOrbit 3s linear infinite"><circle cx="120" cy="44" r="1.1" fill="var(--paper)"/></g><g class="pleamar-orbit" style="--a:200deg;transform:rotate(200deg);animation:pleamarOrbit 3s linear infinite"><circle cx="120" cy="44" r="1.3" fill="var(--ember)"/></g><g class="pleamar-orbit" style="--a:110deg;transform:rotate(110deg);animation:pleamarOrbit 4.2s linear infinite"><circle cx="125" cy="44" r="1.4" fill="var(--faint)"/></g><g class="pleamar-orbit" style="--a:300deg;transform:rotate(300deg);animation:pleamarOrbit 4.2s linear infinite reverse"><circle cx="125" cy="44" r="1.2" fill="var(--rust)"/></g><g class="pleamar-orbit" style="--a:15deg;transform:rotate(15deg);animation:pleamarOrbit 5.5s linear infinite"><circle cx="130" cy="44" r="1.6" fill="var(--paper)"/></g><g class="pleamar-orbit" style="--a:250deg;transform:rotate(250deg);animation:pleamarOrbit 5.5s linear infinite"><circle cx="130" cy="44" r="1.3" fill="var(--ember)"/></g><g class="pleamar-orbit" style="--a:170deg;transform:rotate(170deg);animation:pleamarOrbit 7s linear infinite reverse"><circle cx="136" cy="44" r="1.8" fill="var(--faint)"/></g><g class="pleamar-orbit" style="--a:330deg;transform:rotate(330deg);animation:pleamarOrbit 7s linear infinite"><circle cx="136" cy="44" r="1.4" fill="var(--rust)"/></g><g class="pleamar-orbit" style="--a:60deg;transform:rotate(60deg);animation:pleamarOrbit 8.6s linear infinite"><circle cx="142" cy="44" r="2" fill="var(--paper)"/></g><g class="pleamar-orbit" style="--a:220deg;transform:rotate(220deg);animation:pleamarOrbit 8.6s linear infinite"><circle cx="142" cy="44" r="1.5" fill="var(--ember)"/></g><g class="pleamar-orbit" style="--a:100deg;transform:rotate(100deg);animation:pleamarOrbit 10.5s linear infinite reverse"><circle cx="148" cy="44" r="2.2" fill="var(--faint)"/></g><g class="pleamar-orbit" style="--a:290deg;transform:rotate(290deg);animation:pleamarOrbit 10.5s linear infinite"><circle cx="148" cy="44" r="1.7" fill="var(--rust)"/></g><circle class="pleamar-halo" cx="110" cy="44" r="9" fill="none" stroke="var(--ember)" opacity=".4"/><circle cx="110" cy="44" r="5" fill="var(--ember)"/></svg>
-<style>
-  .pleamar-orbit{transform-box:view-box;transform-origin:110px 44px}
-  .pleamar-halo{transform-box:fill-box;transform-origin:center;animation:pleamarPulse 4s ease-in-out infinite}
-  @keyframes pleamarOrbit{from{transform:rotate(var(--a))}to{transform:rotate(calc(var(--a) + 360deg))}}
-  @keyframes pleamarPulse{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.75;transform:scale(1.15)}}
-</style>
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <!-- pleamar: a faint gravitational center, seven points orbiting on invisible
+       ellipses at periods that divide the 12s master evenly (12/6/4), one point
+       trailing a faint arc. Slow, hypnotic, seamless loop. -->
+
+  <ellipse cx="110" cy="44" rx="22" ry="8" fill="none" stroke="var(--faint)" stroke-dasharray="1 4" opacity=".22"/>
+  <ellipse cx="110" cy="44" rx="34" ry="13" fill="none" stroke="var(--faint)" stroke-dasharray="1 4" opacity=".16"/>
+  <ellipse cx="110" cy="44" rx="46" ry="19" fill="none" stroke="var(--faint)" stroke-dasharray="1 4" opacity=".1"/>
+
+  <!-- trailing arc for one orbiting point, slowly draws over the loop -->
+  <ellipse class="plm-trail" cx="110" cy="44" rx="34" ry="13" fill="none" stroke="var(--ember)" stroke-width="1"/>
+
+  <g class="plm-orbit" style="--a:20deg;--dur:12s"><circle cx="132" cy="44" r="1.4" fill="var(--faint)"/></g>
+  <g class="plm-orbit" style="--a:160deg;--dur:12s"><circle cx="88" cy="44" r="1.4" fill="var(--faint)"/></g>
+  <g class="plm-orbit" style="--a:70deg;--dur:6s"><circle cx="144" cy="44" r="1.2" fill="var(--faint)"/></g>
+  <g class="plm-orbit" style="--a:250deg;--dur:6s"><circle cx="76" cy="44" r="1.6" fill="var(--faint)"/></g>
+  <g class="plm-orbit" style="--a:0deg;--dur:4s"><circle cx="156" cy="44" r="1.1" fill="var(--faint)"/></g>
+  <g class="plm-orbit" style="--a:120deg;--dur:4s"><circle cx="64" cy="44" r="1.3" fill="var(--faint)"/></g>
+  <g class="plm-orbit plm-lead" style="--a:200deg;--dur:12s"><circle cx="144" cy="44" r="1.6" fill="var(--ember)"/></g>
+
+  <circle class="plm-halo" cx="110" cy="44" r="9" fill="none" stroke="var(--ember)" opacity=".4"/>
+  <circle cx="110" cy="44" r="3" fill="var(--ember)"/>
+
+  <text class="plm-label" x="110" y="80" font-size="7" fill="var(--faint)" text-anchor="middle">N=7</text>
+
+  <style>
+    .plm-orbit { transform-box: view-box; transform-origin: 110px 44px; transform: rotate(var(--a)); animation: plmOrbit var(--dur) linear infinite; }
+    @keyframes plmOrbit { from { transform: rotate(var(--a)); } to { transform: rotate(calc(var(--a) + 360deg)); } }
+
+    .plm-halo { transform-box: fill-box; transform-origin: center; animation: plmPulse 4s ease-in-out infinite; }
+    @keyframes plmPulse { 0%, 100% { opacity: .32; transform: scale(1); } 50% { opacity: .7; transform: scale(1.18); } }
+
+    /* trailing arc: draws once per 12s loop, fades before the seam, seamless */
+    .plm-trail {
+      stroke-dasharray: 30 265; /* short visible arc, long gap */
+      stroke-dashoffset: 0;
+      opacity: 0;
+      animation: plmTrail 12s cubic-bezier(.45,0,.4,1) infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    @keyframes plmTrail {
+      0% { stroke-dashoffset: 0; opacity: 0; }
+      4% { opacity: .5; }
+      92% { stroke-dashoffset: -265; opacity: .5; }
+      100% { stroke-dashoffset: -295; opacity: 0; }
+    }
+
+    .plm-label { animation: plmLabel 12s ease-in-out infinite; }
+    @keyframes plmLabel { 0%, 40% { opacity: 0; } 55%, 90% { opacity: .55; } 100% { opacity: 0; } }
+  </style>
+</svg>
