@@ -132,6 +132,8 @@ footer h2{max-width:22ch}
 .contact-list{margin-top:30px;display:flex;flex-direction:column;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:.92rem}
 .contact-list span{color:var(--faint);display:inline-block;width:120px}
 .fin{margin-top:60px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--faint)}
+/* links surrounded by same-color text must not rely on color alone */
+.fin a,.vault a{text-decoration:underline}
 
 /* ── Scroll reveal (JS-gated so content never hides without JS) ── */
 .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}

@@ -9,7 +9,7 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <Base title="Field notes — Juan Sutil Palma" description="Occasional writing by Juan Sutil Palma on software, machine learning and physics." swapTitle={false}>
-  <section class="blogwrap">
+  <main class="blogwrap">
     <p class="sec-label" data-i18n="blog_label">{t('blog_label')}</p>
     <h2 data-i18n="blog_h2">{t('blog_h2')}</h2>
     <p class="lede" data-i18n="blog_lede">{t('blog_lede')}</p>
@@ -28,11 +28,11 @@ const posts = (await getCollection('blog')).sort(
     )}
 
     <p class="back mono"><a href="/" data-i18n="blog_back">{t('blog_back')}</a></p>
-  </section>
+  </main>
 </Base>
 
 <style>
-  .blogwrap{min-height:70vh;padding-top:130px}
+  .blogwrap{display:block;max-width:var(--max);margin:0 auto;min-height:70vh;padding:130px 24px 88px}
   .posts{margin-top:34px;list-style:none;display:flex;flex-direction:column;gap:14px}
   .posts li{display:flex;gap:18px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px}
   .posts .date{color:var(--faint);font-size:.78rem}
