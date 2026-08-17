@@ -49,7 +49,7 @@ const DEFAULT = 'pin';
                 aria-controls={`panel-${p.id}`}
                 data-proj={p.id}
               >
-                <span class="xp-name">{p.name}{p.lock && <span class="lock" aria-label="private"> 🔒</span>}</span>
+                <span class="xp-name">{p.name}</span>
                 <span class="xp-tag mono" data-i18n={`pt_${p.k}`}>{t(`pt_${p.k}`)}</span>
                 <span class={`status ${p.state}`} data-i18n={`ps_${p.k}`}>{t(`ps_${p.k}`)}</span>
               </button>
@@ -61,9 +61,10 @@ const DEFAULT = 'pin';
                 hidden={!selected}
               >
                 <div class="mock"><Mock /></div>
-                <p class="xp-body" data-i18n={`pb_${p.k}`} set:html={t(`pb_${p.k}`)} />
+                <p class="xp-body" data-i18n={`pp_${p.k}`} set:html={t(`pp_${p.k}`)} />
+                <p class="xp-body xp-eng" data-i18n={`pe_${p.k}`} set:html={t(`pe_${p.k}`)} />
                 <p class="stack">{p.stack}</p>
-                <a class="ask mono" href={`mailto:juan@uc.cl?subject=${encodeURIComponent(p.mailSubject)}`} data-i18n="ask">{t('ask')}</a>
+                <a class="ask mono" href="https://calendly.com/jjsutilp/meet-juan" target="_blank" rel="noopener" data-i18n="ask">{t('ask')}</a>
               </div>
             </>
           );
@@ -102,6 +103,7 @@ const DEFAULT = 'pin';
   /* author display:flex would override the UA's [hidden]{display:none} — restate it */
   .xp-panel[hidden]{display:none}
   .xp-panel .xp-body{color:var(--faint);font-size:.95rem;max-width:58ch}
+  .xp-panel .xp-eng{font-size:.88rem;opacity:.92}
   .xp-panel :global(.xp-body strong){color:var(--ember);font-weight:500}
   .xp-panel :global(.xp-body a){color:var(--paper);border-bottom:1px dotted var(--faint)}
   .xp-panel .ask{font-size:.78rem}
