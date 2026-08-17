@@ -99,6 +99,8 @@ const DEFAULT = 'pin';
   .xp-row .status{grid-column:2;grid-row:1 / span 2;align-self:center}
 
   .xp-panel{padding:20px 4px 30px;display:flex;flex-direction:column;gap:14px}
+  /* author display:flex would override the UA's [hidden]{display:none} — restate it */
+  .xp-panel[hidden]{display:none}
   .xp-panel .xp-body{color:var(--faint);font-size:.95rem;max-width:58ch}
   .xp-panel :global(.xp-body strong){color:var(--ember);font-weight:500}
   .xp-panel :global(.xp-body a){color:var(--paper);border-bottom:1px dotted var(--faint)}
