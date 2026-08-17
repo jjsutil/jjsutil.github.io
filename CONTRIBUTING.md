@@ -36,8 +36,7 @@ Deploys happen automatically: every push to `main` runs
 
 - Both themes (the ☀/☾ toggle) and both languages (EN/ES).
 - 380 px viewport: no horizontal scroll.
-- `prefers-reduced-motion: reduce`: mock scenes must read as complete still frames;
-  the hero canvas paints a single static map.
+- `prefers-reduced-motion: reduce`: the hero canvas paints a single static map.
 - Keyboard: the project explorer navigates with ↑/↓ and focus stays visible.
 
 ## House specifics
@@ -48,9 +47,6 @@ Deploys happen automatically: every push to `main` runs
   content: don't "improve" them without an explicit decision recorded in the issue.
 - The Chirikov hero canvas is a faithful port of an approved implementation; changes
   to its dynamics need an owner-approved proposal first (rule 16 territory).
-- Mock scenes (`src/components/mocks/`) follow a contract: viewBox `0 0 220 88`,
-  keyframe names prefixed by project, token colors only (`var(--ember)` etc.), and a
-  base state that reads as a complete scene without animation.
 
 ## Writing a blog post
 

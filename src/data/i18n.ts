@@ -59,10 +59,6 @@ export const T: Record<string, { en: string; es: string }> = {
     es: '<b>$ gh repo list --visibility private</b> → 15 proyectos, la mayoría tras repos privados. Acceso a pedido: <a href="https://calendly.com/jjsutilp/meet-juan" target="_blank" rel="noopener">calendly</a> · <a href="mailto:juan@uc.cl">email</a>',
   },
   ask: { en: '→ let’s talk about this one', es: '→ conversemos de esto' },
-  explorer_hint: {
-    en: '↑ ↓ to browse',
-    es: '↑ ↓ para navegar',
-  },
   pg_g1: { en: 'software products', es: 'productos de software' },
   pg_g2: { en: 'machine learning', es: 'machine learning' },
   pg_g3: { en: 'science', es: 'ciencia' },

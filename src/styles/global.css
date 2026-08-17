@@ -102,12 +102,6 @@ h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:500;letter-spacing:-.01em;ma
 .stack{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--faint);letter-spacing:.02em}
 .stack::before{content:"# ";color:var(--rust)}
 
-/* ── Mock stage: paused by default, runs when its panel is selected ── */
-.mock{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:color-mix(in srgb,var(--void) 55%,transparent)}
-.mock svg{width:100%;height:auto;display:block;font-family:'IBM Plex Mono',monospace}
-.mock *{animation-play-state:paused}
-.xp-panel.on .mock *{animation-play-state:running}
-
 /* ── Track record ──────────────────────────────── */
 .track{margin-top:44px;border-top:1px solid var(--line)}
 .row{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line)}
@@ -151,6 +145,4 @@ footer h2{max-width:22ch}
   .caret{animation:none;opacity:1}
   body{transition:none}
   .js .reveal{opacity:1;transform:none;transition:none}
-  /* mocks become complete still scenes: no keyframes, everything visible */
-  .mock *{animation:none!important;opacity:1!important}
 }

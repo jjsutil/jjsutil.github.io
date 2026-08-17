@@ -1,28 +1,7 @@
 ---
 import { t } from '../data/i18n';
 import { GROUPS } from '../data/projects';
-import Pin from './mocks/Pin.astro';
-import Talia from './mocks/Talia.astro';
-import Vi2bo from './mocks/Vi2bo.astro';
-import Speed from './mocks/Speed.astro';
-import Street from './mocks/Street.astro';
-import Pleamar from './mocks/Pleamar.astro';
-import Bioinfo from './mocks/Bioinfo.astro';
-import Queltehue from './mocks/Queltehue.astro';
-import Qr from './mocks/Qr.astro';
-import Concon from './mocks/Concon.astro';
-import Bootflower from './mocks/Bootflower.astro';
-import Onthemerge from './mocks/Onthemerge.astro';
-import Palomita from './mocks/Palomita.astro';
-import Juanos from './mocks/Juanos.astro';
-import S67 from './mocks/S67.astro';
 
-const MOCKS: Record<string, any> = {
-  pin: Pin, talia: Talia, vi2bo: Vi2bo, speed: Speed, street: Street,
-  pleamar: Pleamar, bioinfo: Bioinfo, queltehue: Queltehue, qr: Qr,
-  concon: Concon, bootflower: Bootflower, onthemerge: Onthemerge,
-  palomita: Palomita, juanos: Juanos, s67: S67,
-};
 const DEFAULT = 'pin';
 ---
 
@@ -31,14 +10,12 @@ const DEFAULT = 'pin';
   <h2 data-i18n="p_h2">{t('p_h2')}</h2>
 
   <div class="vault reveal" data-i18n="vault" set:html={t('vault')} />
-  <p class="xp-hint mono" data-i18n="explorer_hint" aria-hidden="true">{t('explorer_hint')}</p>
 
   <div class="xp reveal" id="explorer">
     {GROUPS.map((group) => (
       <>
         <p class="xp-group mono" data-i18n={group.key}>{t(group.key)}</p>
         {group.projects.map((p) => {
-          const Mock = MOCKS[p.id];
           const selected = p.id === DEFAULT;
           return (
             <>
@@ -60,7 +37,6 @@ const DEFAULT = 'pin';
                 aria-labelledby={`proj-${p.id}`}
                 hidden={!selected}
               >
-                <div class="mock"><Mock /></div>
                 <p class="xp-body" data-i18n={`pp_${p.k}`} set:html={t(`pp_${p.k}`)} />
                 <p class="xp-body xp-eng" data-i18n={`pe_${p.k}`} set:html={t(`pe_${p.k}`)} />
                 <p class="stack">{p.stack}</p>
@@ -75,8 +51,7 @@ const DEFAULT = 'pin';
 </section>
 
 <style>
-  .xp-hint{margin-top:26px;font-size:.72rem;color:var(--faint);letter-spacing:.04em}
-  .xp{margin-top:14px}
+  .xp{margin-top:40px}
 
   .xp-group{
     font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);

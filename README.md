@@ -5,7 +5,7 @@ Personal landing page of **Juan Sutil Palma** — software engineer in Santiago,
 ## What's on the page
 
 - A hero whose background is a **live phase-space portrait of the Chirikov standard map** (K = 0.97), drawn point by point on a canvas over several minutes. The portrait photo acts as a massive body: passing points get captured into slow orbits around it, then escape back into the map.
-- A track record and a **project explorer**: fifteen projects in a compact master-detail list, each with its own small animated SVG scene that runs while the project is selected.
+- A track record and a **project explorer**: fifteen projects in a compact, sober master-detail list — what each one is, the engineering decisions behind it, and its stack.
 - English/Spanish toggle and a light/dark theme, both remembered between visits.
 - A [blog](https://jjsutil.github.io/blog/) — field notes, written in Markdown.
 
@@ -41,7 +41,7 @@ The build picks it up, lists it on `/blog`, and renders it at `/blog/<filename>/
 
 ## Accessibility notes
 
-The page respects `prefers-reduced-motion` (the canvas paints a single static map, the mock scenes settle into complete still frames), keeps keyboard focus visible, and the project explorer is fully keyboard-navigable (↑/↓).
+The page respects `prefers-reduced-motion` (the canvas paints a single static map), keeps keyboard focus visible, and the project explorer is fully keyboard-navigable (↑/↓).
 
 ## Project status
 

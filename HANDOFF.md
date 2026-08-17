@@ -11,8 +11,10 @@ Done in this session:
 
 - Full Astro port of the approved single-file landing (`../index.html` in the owner's
   working folder was the content source; copy is verbatim, both languages).
-- Compact project explorer (master-detail, keyboard ↑/↓, accordion under 860 px) with
-  the fifteen animated scenes at final staging.
+- Compact project explorer (master-detail, keyboard ↑/↓, accordion under 860 px).
+  Text-only by owner decision (2026-08-17): two generations of animated scenes were
+  built and reviewed, and the owner chose to remove them entirely for now — sober
+  and private beats decorative. Revisiting the idea is a future unit, not a TODO.
 - Blog shell: `/blog` with an honest empty state; posts are Markdown files dropped in
   `src/content/blog/`.
 - QA: 13 automated browser checks (see commit bodies), fresh-agent fidelity review
