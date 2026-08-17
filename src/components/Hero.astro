@@ -29,7 +29,6 @@ import { t } from '../data/i18n';
       <Image src={portrait} alt="Juan Sutil Palma" width={360} height={360} id="portraitImg" loading="eager" />
     </div>
   </div>
-  <p class="hero-note" data-i18n="note">{t('note')}</p>
 </header>
 
 <script>
@@ -117,7 +116,12 @@ import { t } from '../data/i18n';
       ctx.fillStyle = 'rgba(0,0,0,.01)';     // very slow multiplicative fade: the map paints itself
       ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'source-over';
-      for (const p of pts) { step(p); dot(p); }
+      // each particle advances (and deposits its dot) every 3rd frame, staggered:
+      // the picture builds ~3x slower and settles at ~1/3 the density, so the
+      // map never saturates while the fade stays untouched
+      for (let i = 0; i < pts.length; i++) {
+        if ((tick + i) % 3 === 0) { const p = pts[i]; step(p); dot(p); }
+      }
       requestAnimationFrame(frame);
     }
     function paintStatic() {                 // reduced motion: pure map, drawn once
