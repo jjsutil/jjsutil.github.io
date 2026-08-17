@@ -1,0 +1,42 @@
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <text class="s67-magic" x="12" y="32" font-size="16" fill="var(--paper)">6:07</text>
+  <text x="12" y="44" font-size="7.5" fill="var(--ember)">magic hour</text>
+  <text class="s67-ghost" x="12" y="60" font-size="11" fill="var(--faint)">12:45</text>
+  <text class="s67-ghost" x="46" y="60" font-size="9" fill="var(--faint)">&#128274;</text>
+
+  <rect x="94" y="8" width="48" height="64" rx="7" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+  <clipPath id="s67-feed-clip"><rect x="98" y="13" width="40" height="54" rx="4"/></clipPath>
+  <g clip-path="url(#s67-feed-clip)">
+    <g class="s67-feed">
+      <rect x="101" y="17" width="34" height="9" rx="2" fill="var(--line)"/>
+      <rect x="101" y="30" width="34" height="9" rx="2" fill="var(--line)"/>
+      <rect x="101" y="43" width="34" height="9" rx="2" fill="var(--line)"/>
+      <rect x="101" y="56" width="34" height="9" rx="2" fill="var(--line)"/>
+      <rect x="101" y="69" width="34" height="9" rx="2" fill="var(--line)"/>
+    </g>
+  </g>
+
+  <g class="s67-badge">
+    <circle cx="136" cy="14" r="7" fill="var(--ink)" stroke="var(--faint)"/>
+    <text x="136" y="17" text-anchor="middle" font-size="8" fill="var(--faint)">&#128274;</text>
+  </g>
+
+  <text class="s67-pop" x="160" y="26" font-size="13" fill="var(--rust)">&#10084;</text>
+  <rect x="150" y="34" width="58" height="15" rx="7.5" fill="none" stroke="var(--faint)"/>
+  <text x="155" y="44" font-size="7.5" fill="var(--faint)">sube tu 67</text>
+  <text class="s67-tick" x="158" y="64" font-size="10" fill="var(--ok)">+67</text>
+</svg>
+<style>
+  .s67-magic{transform-box:fill-box;transform-origin:center;animation:s67Magic 4s ease-in-out infinite}
+  .s67-ghost{transform-box:fill-box;transform-origin:center;animation:s67Ghost 4s ease-in-out infinite}
+  .s67-feed{transform-box:fill-box;transform-origin:center;animation:s67Feed 3s linear infinite alternate}
+  .s67-badge{transform-box:fill-box;transform-origin:center;animation:s67Badge 3.4s ease-in-out infinite}
+  .s67-pop{transform-box:fill-box;transform-origin:center;animation:s67Pop 2.4s ease-in-out infinite}
+  .s67-tick{transform-box:fill-box;transform-origin:center;animation:s67Tick 2.8s .5s ease-in-out infinite}
+  @keyframes s67Magic{0%,100%{opacity:1}50%{opacity:.7}}
+  @keyframes s67Ghost{0%,100%{opacity:.3}50%{opacity:.85}}
+  @keyframes s67Feed{0%{transform:translateY(0)}100%{transform:translateY(-26px)}}
+  @keyframes s67Badge{0%,100%{opacity:.35}50%{opacity:.9}}
+  @keyframes s67Pop{0%,100%{opacity:.4;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes s67Tick{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+</style>

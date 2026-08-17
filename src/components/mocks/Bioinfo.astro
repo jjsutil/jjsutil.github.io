@@ -1,0 +1,43 @@
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <g transform="translate(0,12)">
+    <!-- lab bench baseline -->
+    <line x1="10" y1="52" x2="210" y2="52" stroke="var(--line)"/>
+    <!-- scrolling sequence track, two copies for seamless loop -->
+    <g class="bio-seq">
+      <text x="0" y="20" font-size="10" letter-spacing="2" fill="var(--faint)">ACGT TGCA CCAT GGTA ACGT TGCA ACGT TGCA CCAT GGTA ACGT TGCA </text>
+      <text x="220" y="20" font-size="10" letter-spacing="2" fill="var(--faint)">ACGT TGCA CCAT GGTA ACGT TGCA ACGT TGCA CCAT GGTA ACGT TGCA </text>
+    </g>
+    <!-- read-alignment tick marks under the sequence -->
+    <line class="bio-tick" x1="20" y1="26" x2="20" y2="30" stroke="var(--ember)" style="animation-delay:0s"/>
+    <line class="bio-tick" x1="54" y1="26" x2="54" y2="30" stroke="var(--ember)" style="animation-delay:.4s"/>
+    <line class="bio-tick" x1="88" y1="26" x2="88" y2="30" stroke="var(--ember)" style="animation-delay:.8s"/>
+    <line class="bio-tick" x1="122" y1="26" x2="122" y2="30" stroke="var(--ember)" style="animation-delay:1.2s"/>
+    <line class="bio-tick" x1="156" y1="26" x2="156" y2="30" stroke="var(--ember)" style="animation-delay:1.6s"/>
+    <line class="bio-tick" x1="190" y1="26" x2="190" y2="30" stroke="var(--ember)" style="animation-delay:2s"/>
+
+    <!-- analysis bars rising from the bench, axis baseline at y=52 -->
+    <rect class="bio-bar" x="24" y="34" width="9" height="18" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:0s"/>
+    <rect class="bio-bar" x="58" y="30" width="9" height="22" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:.2s"/>
+    <rect class="bio-bar" x="92" y="26" width="9" height="26" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:.4s"/>
+    <rect class="bio-bar" x="126" y="32" width="9" height="20" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:.6s"/>
+    <rect class="bio-bar" x="160" y="28" width="9" height="24" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:.8s"/>
+    <rect class="bio-bar" x="184" y="35" width="9" height="17" rx="1.5" fill="var(--ok)" opacity=".8" style="animation-delay:1s"/>
+
+    <!-- publication-grade result readout -->
+    <g class="bio-result">
+      <rect x="132" y="4" width="82" height="14" rx="4" fill="none" stroke="var(--ember)"/>
+      <text x="138" y="14" font-size="7.5" fill="var(--ember)">p &lt; 0.001 ✓</text>
+    </g>
+  </g>
+  <style>
+    @keyframes bioScroll { to { transform: translateX(-220px); } }
+    @keyframes bioTick { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+    @keyframes bioBar { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+    @keyframes bioResult { 0%, 12% { opacity: 0; transform: scale(.7); } 26%, 88% { opacity: 1; transform: scale(1); } 100% { opacity: 0; } }
+
+    .bio-seq { animation: bioScroll 4.4s linear infinite; }
+    .bio-tick { animation: bioTick 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .bio-bar { animation: bioBar 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center bottom; }
+    .bio-result { animation: bioResult 4.4s .6s ease infinite; transform-box: fill-box; transform-origin: center; opacity: 1; }
+  </style>
+</svg>

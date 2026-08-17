@@ -1,0 +1,47 @@
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <g class="palo-repo">
+    <rect x="8" y="12" width="20" height="14" rx="2" fill="var(--ink)" stroke="var(--line)"/>
+    <path d="M12 19 H24" stroke="var(--line)" stroke-width="1"/>
+    <circle class="palo-dot" cx="18" cy="19" r="2.2" fill="var(--ok)" style="animation-delay:0s"/>
+  </g>
+  <g class="palo-repo">
+    <rect x="8" y="33" width="20" height="14" rx="2" fill="var(--ink)" stroke="var(--line)"/>
+    <path d="M12 40 H24" stroke="var(--line)" stroke-width="1"/>
+    <circle class="palo-dot" cx="18" cy="40" r="2.2" fill="var(--ok)" style="animation-delay:.4s"/>
+  </g>
+  <g class="palo-repo">
+    <rect x="8" y="54" width="20" height="14" rx="2" fill="var(--ink)" stroke="var(--line)"/>
+    <path d="M12 61 H24" stroke="var(--line)" stroke-width="1"/>
+    <circle class="palo-dot" cx="18" cy="61" r="2.2" fill="var(--ok)" style="animation-delay:.8s"/>
+  </g>
+
+  <path d="M28 19 L34 40 M28 40 L34 40 M28 61 L34 40" fill="none" stroke="var(--line)" stroke-width="1"/>
+  <path d="M34 40 C 80 8 150 8 194 34" fill="none" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="3 5"/>
+
+  <g class="palo-bird">
+    <path d="M110 10 L104 6" stroke="var(--paper)" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M118 10 L124 6" stroke="var(--paper)" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="114" cy="10" r="3" fill="var(--paper)"/>
+  </g>
+
+  <g class="palo-envelope">
+    <rect x="180" y="24" width="28" height="20" rx="2" fill="var(--ink)" stroke="var(--ember)" stroke-width="1.4"/>
+    <path d="M180 26 L194 38 L208 26" fill="none" stroke="var(--ember)" stroke-width="1.4"/>
+  </g>
+
+  <text x="10" y="83" font-size="7.5" fill="var(--faint)">mon 09:00</text>
+</svg>
+<style>
+  .palo-bird{transform-box:fill-box;transform-origin:center;animation:paloFly 3.6s ease-in-out infinite}
+  .palo-dot{transform-box:fill-box;transform-origin:center;animation:paloPulse 2.2s ease-in-out infinite}
+  .palo-envelope{transform-box:fill-box;transform-origin:center;animation:paloEnvelope 3.6s ease-in-out infinite}
+  @keyframes paloFly{
+    0%{transform:translate(-80px,30px) scale(.6)}
+    25%{transform:translate(-44px,6px) scale(.8)}
+    50%{transform:translate(0,0) scale(1)}
+    75%{transform:translate(46px,4px) scale(1.05)}
+    100%{transform:translate(80px,24px) scale(.9)}
+  }
+  @keyframes paloPulse{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+  @keyframes paloEnvelope{0%,70%{opacity:.8;transform:scale(1)}85%,95%{opacity:1;transform:scale(1.1)}100%{opacity:.8;transform:scale(1)}}
+</style>

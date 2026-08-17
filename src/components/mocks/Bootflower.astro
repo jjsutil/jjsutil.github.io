@@ -1,0 +1,30 @@
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <rect x="10" y="8" width="130" height="60" rx="4" fill="none" stroke="var(--line)"/>
+  <circle cx="18" cy="16" r="1.5" fill="var(--rust)"/>
+  <circle cx="24" cy="16" r="1.5" fill="var(--ember)"/>
+  <circle cx="30" cy="16" r="1.5" fill="var(--ok)"/>
+
+  <text class="boot-pop" style="animation:bootPop 4.6s 0s ease infinite" x="18" y="28" font-size="8" fill="var(--ok)">✓ <tspan fill="var(--faint)">env ready</tspan></text>
+  <text class="boot-pop" style="animation:bootPop 4.6s .5s ease infinite" x="18" y="40" font-size="8" fill="var(--ok)">✓ <tspan fill="var(--faint)">tools pinned</tspan></text>
+  <text class="boot-pop" style="animation:bootPop 4.6s 1s ease infinite" x="18" y="52" font-size="8" fill="var(--ok)">✓ <tspan fill="var(--faint)">repo verified</tspan></text>
+  <text class="boot-pop" style="animation:bootPop 4.6s 1.3s ease infinite" x="18" y="62" font-size="7" fill="var(--faint)">byte-level diff: 0</text>
+
+  <path d="M140 44 h8 m-3 -3 3 3 -3 3" fill="none" stroke="var(--faint)" stroke-width="1.4"/>
+
+  <text class="boot-pop" style="animation:bootPop 4.6s 1.9s ease infinite" x="152" y="56" font-size="20" fill="var(--ok)">✿</text>
+
+  <line class="boot-dash" style="animation:bootDash 4.6s 2.2s ease infinite" x1="166" y1="50" x2="204" y2="18" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="60" stroke-dashoffset="0"/>
+  <circle class="boot-pop" style="animation:bootPop 4.6s 2.5s ease infinite" cx="204" cy="18" r="3" fill="var(--ember)"/>
+
+  <line class="boot-dash" style="animation:bootDash 4.6s 2.5s ease infinite" x1="166" y1="50" x2="204" y2="50" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="60" stroke-dashoffset="0"/>
+  <circle class="boot-pop" style="animation:bootPop 4.6s 2.8s ease infinite" cx="204" cy="50" r="3" fill="var(--ember)"/>
+
+  <line class="boot-dash" style="animation:bootDash 4.6s 2.8s ease infinite" x1="166" y1="50" x2="204" y2="82" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="60" stroke-dashoffset="0"/>
+  <circle class="boot-pop" style="animation:bootPop 4.6s 3.1s ease infinite" cx="204" cy="82" r="3" fill="var(--ember)"/>
+</svg>
+
+<style>
+  @keyframes bootPop{0%,10%{opacity:0;transform:scale(.6)}22%,88%{opacity:1;transform:scale(1)}100%{opacity:0}}
+  @keyframes bootDash{0%,15%{stroke-dashoffset:60}30%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:60}}
+  .boot-pop{transform-box:fill-box;transform-origin:center}
+</style>

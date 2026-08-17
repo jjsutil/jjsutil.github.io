@@ -1,0 +1,41 @@
+<svg viewBox="0 0 220 88" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <text x="10" y="60" font-size="6.5" fill="var(--faint)">main</text>
+  <line x1="10" y1="64" x2="210" y2="64" stroke="var(--line)" stroke-width="2"/>
+  <circle cx="18" cy="64" r="2" fill="var(--faint)" opacity=".6"/>
+  <circle cx="32" cy="64" r="2" fill="var(--faint)" opacity=".6"/>
+  <circle cx="190" cy="64" r="2" fill="var(--faint)" opacity=".6"/>
+  <circle cx="202" cy="64" r="2" fill="var(--faint)" opacity=".6"/>
+
+  <path d="M14 64 H66 C86 64 86 34 106 34 H150" fill="none" stroke="var(--line)" stroke-width="2"/>
+  <path class="merge-dash" style="animation:mergeDash 4.4s ease-in-out infinite" d="M14 64 H66 C86 64 86 34 106 34 H150" fill="none" stroke="var(--ember)" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="0"/>
+  <circle cx="106" cy="34" r="4" fill="var(--ok)"/>
+  <circle class="merge-pulse" style="animation:mergePulse 2.2s ease-in-out infinite" cx="106" cy="34" r="4" fill="none" stroke="var(--ok)" opacity=".5"/>
+  <text x="96" y="46" font-size="6" fill="var(--faint)">merge</text>
+
+  <path d="M150 64 C162 64 162 50 176 50" fill="none" stroke="var(--line)" stroke-width="2"/>
+  <circle cx="176" cy="50" r="6" fill="none" stroke="var(--rust)" stroke-width="1.6"/>
+  <path d="M173 47 l6 6 m0 -6 -6 6" fill="none" stroke="var(--rust)" stroke-width="1.4"/>
+  <circle class="merge-pulse" style="animation:mergePulse 2.2s .3s ease-in-out infinite" cx="176" cy="50" r="6" fill="none" stroke="var(--rust)" opacity=".4"/>
+  <text x="163" y="62" font-size="6" fill="var(--faint)">closed</text>
+
+  <g class="merge-alt1" style="animation:mergeAlt1 4.4s ease infinite">
+    <rect x="60" y="6" width="56" height="20" rx="8" fill="var(--ink)" stroke="var(--ember)"/>
+    <path d="M82 26 l4 7 4 -7" fill="var(--ink)" stroke="var(--ember)"/>
+    <text x="68" y="19.5" font-size="10" font-weight="bold" fill="var(--ember)">FAHH!</text>
+  </g>
+
+  <g class="merge-alt2" style="animation:mergeAlt2 4.4s ease infinite">
+    <rect x="140" y="6" width="62" height="18" rx="8" fill="var(--ink)" stroke="var(--rust)"/>
+    <path d="M164 24 l4 6 4 -6" fill="var(--ink)" stroke="var(--rust)"/>
+    <text x="146" y="18.5" font-size="9" fill="var(--rust)">jajajajaja</text>
+  </g>
+
+  <text x="10" y="80" font-size="7" fill="var(--faint)">🔊 custom</text>
+</svg>
+
+<style>
+  @keyframes mergeDash{0%,15%{stroke-dashoffset:200}30%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:200}}
+  @keyframes mergePulse{0%,100%{opacity:.15}50%{opacity:.7}}
+  @keyframes mergeAlt1{0%,42%{opacity:1}50%,100%{opacity:0}}
+  @keyframes mergeAlt2{0%,48%{opacity:0}56%,94%{opacity:1}100%{opacity:0}}
+</style>
