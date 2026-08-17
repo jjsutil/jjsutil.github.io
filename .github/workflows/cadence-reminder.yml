@@ -1,0 +1,126 @@
+# bootflower — weekly maintenance-cadence watchdog.
+# Reads .claude/maintenance-schedule.md; if any periodic task is overdue, opens (or
+# updates — never duplicates) a reminder issue in this repo listing what's overdue.
+# The reminder escalates the longer it goes unattended: `overdue-warning` after 1
+# week open, `overdue-critical` (and forced reopen) after 3 weeks open. See
+# jjsutil/foja#532 and jjsutil/bootflower#51 — the un-escalated version stayed open
+# and ignored for weeks.
+# Seeded by repo-bootstrap; updated only via workflow-sync (rule 9).
+name: cadence-reminder
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Compute overdue tasks
+        id: overdue
+        run: |
+          SCHEDULE=".claude/maintenance-schedule.md"
+          [ -f "$SCHEDULE" ] || { echo "no schedule file"; exit 0; }
+          NOW=$(date +%s)
+          OVERDUE=""
+          # table rows: | task | cadence | last_run |
+          while IFS='|' read -r _ task cadence last _; do
+            task=$(echo "$task" | xargs); cadence=$(echo "$cadence" | xargs); last=$(echo "$last" | xargs)
+            [ -z "$task" ] || [ "$task" = "task" ] || [[ "$task" == -* ]] && continue
+            case "$cadence" in
+              weekly)  LIMIT=$((7*86400)) ;;
+              monthly) LIMIT=$((30*86400)) ;;
+              *) continue ;; # on-change / on-tag are event-driven, not clock-driven
+            esac
+            if [ "$last" = "never" ] || [ -z "$last" ]; then
+              OVERDUE="$OVERDUE\n- **$task** ($cadence) — never run"
+            else
+              LAST_TS=$(date -d "$last" +%s 2>/dev/null || echo 0)
+              AGE=$((NOW - LAST_TS))
+              if [ "$AGE" -gt "$LIMIT" ]; then
+                DAYS=$((AGE / 86400))
+                OVERDUE="$OVERDUE\n- **$task** ($cadence) — last run $last, ${DAYS}d ago"
+              fi
+            fi
+          done < <(grep -E '^\|' "$SCHEDULE")
+          if [ -n "$OVERDUE" ]; then
+            {
+              echo "list<<EOF"
+              echo -e "$OVERDUE"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open, escalate or update reminder issue
+        if: steps.overdue.outputs.list != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="chore: maintenance tasks overdue"
+          LIST="${{ steps.overdue.outputs.list }}"
+
+          gh label create bootflower-cadence --color BFD4F2 \
+            --description "bootflower maintenance reminders" 2>/dev/null || true
+          gh label create overdue-warning --color FBCA04 \
+            --description "cadence reminder unattended 1+ week" 2>/dev/null || true
+          gh label create overdue-critical --color B60205 \
+            --description "cadence reminder unattended 3+ weeks" 2>/dev/null || true
+
+          # Reuse the oldest issue carrying the label (open or closed) instead of
+          # duplicating — escalation needs its original creation date to measure age.
+          EXISTING=$(gh issue list --state all --label bootflower-cadence \
+            --json number,createdAt,state --jq 'sort_by(.createdAt) | .[0]')
+          NUM=$(echo "$EXISTING" | jq -r '.number // empty')
+
+          if [ -z "$NUM" ]; then
+            # Week 1: first sighting, plain issue, no escalation yet.
+            BODY="The following periodic tasks from \`.claude/maintenance-schedule.md\` are overdue:
+          $LIST
+
+          Run each with its skill (e.g. \`repo-health-report\`, \`todo-harvester\`) and update \`last_run\`.
+          _Opened automatically by cadence-reminder.yml (bootflower)._"
+            gh issue create --title "$TITLE" --body "$BODY" --label bootflower-cadence
+            exit 0
+          fi
+
+          CREATED=$(echo "$EXISTING" | jq -r '.createdAt')
+          STATE=$(echo "$EXISTING" | jq -r '.state')
+          AGE_DAYS=$(( ( $(date +%s) - $(date -d "$CREATED" +%s) ) / 86400 ))
+          WEEKS=$((AGE_DAYS / 7))
+
+          if [ "$WEEKS" -ge 3 ]; then
+            # Week 3+: critical — drop the warning label, add critical.
+            SEVERITY="overdue-critical"
+            NOTE="**Critical** — unattended for ${WEEKS} week(s) (open since $CREATED)."
+            gh issue edit "$NUM" --remove-label overdue-warning 2>/dev/null || true
+          elif [ "$WEEKS" -ge 1 ]; then
+            # Week 2: still open a week later — first escalation.
+            SEVERITY="overdue-warning"
+            NOTE="Still overdue after ${WEEKS} week(s) (open since $CREATED)."
+          else
+            SEVERITY=""
+            NOTE="Still overdue."
+          fi
+
+          if [ "$STATE" = "CLOSED" ]; then
+            gh issue reopen "$NUM"
+            NOTE="$NOTE Reopened: the schedule still lists these tasks as overdue."
+          fi
+
+          BODY="The following periodic tasks from \`.claude/maintenance-schedule.md\` are overdue:
+          $LIST
+
+          Run each with its skill (e.g. \`repo-health-report\`, \`todo-harvester\`) and update \`last_run\`.
+
+          $NOTE
+          _Updated automatically by cadence-reminder.yml (bootflower)._"
+          gh issue edit "$NUM" --body "$BODY"
+          [ -n "$SEVERITY" ] && gh issue edit "$NUM" --add-label "$SEVERITY"
+          gh issue comment "$NUM" --body "$NOTE"
