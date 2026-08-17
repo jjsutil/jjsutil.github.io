@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
+import { t } from '../data/i18n';
+---
+
+<header class="hero">
+  <canvas id="phase" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span id="typeName">juan-sutil-palma</span><span class="caret" aria-hidden="true">|</span></p>
+      <h1 data-i18n="h1">{t('h1')}</h1>
+      <p class="sub" data-i18n="sub" set:html={t('sub')} />
+      <div class="cta-row">
+        <a class="btn solid" href="https://calendly.com/jjsutilp/meet-juan" target="_blank" rel="noopener" data-i18n="cta_book">{t('cta_book')}</a>
+        <a class="btn ghost cvbtn" id="cvBtn" href="/cv/Juan_Sutil_CV_EN.pdf" aria-label="Download CV (PDF)" title="CV (pdf)">CV</a>
+        <a class="btn ghost sq" href="https://github.com/jjsutil" target="_blank" rel="noopener" aria-label="GitHub" title="github.com/jjsutil"
+          ><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a
+        >
+        <a class="btn ghost sq" href="https://www.linkedin.com/in/jjsutil/" target="_blank" rel="noopener" aria-label="LinkedIn" title="linkedin.com/in/jjsutil"
+          ><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 1H2.4C1.6 1 1 1.6 1 2.4v11.2c0 .8.6 1.4 1.4 1.4h11.2c.8 0 1.4-.6 1.4-1.4V2.4C15 1.6 14.4 1 13.6 1ZM5.2 12.9H3.1V6.4h2.1v6.5ZM4.1 5.5a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Zm8.8 7.4h-2.1V9.7c0-.8 0-1.7-1.1-1.7s-1.2.8-1.2 1.7v3.2H6.4V6.4h2v.9h.1c.3-.5 1-1.1 2-1.1 2.1 0 2.5 1.4 2.5 3.2v3.5Z"/></svg></a
+        >
+        <a class="btn ghost sq" href="mailto:juan@uc.cl" aria-label="Email" title="juan@uc.cl"
+          ><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.75 3h12.5c.41 0 .75.34.75.75v8.5c0 .41-.34.75-.75.75H1.75a.75.75 0 0 1-.75-.75v-8.5c0-.41.34-.75.75-.75Zm.75 1.9v6.6h11V4.9L8.38 8.6a.75.75 0 0 1-.76 0L2.5 4.9Zm10.1-.4H3.4L8 7.15 12.6 4.5Z"/></svg></a
+        >
+      </div>
+    </div>
+    <div class="portrait">
+      <Image src={portrait} alt="Juan Sutil Palma" width={360} height={360} id="portraitImg" loading="eager" />
+    </div>
+  </div>
+  <p class="hero-note" data-i18n="note">{t('note')}</p>
+</header>
+
+<script>
+  import { PHASE_COLORS, type ThemeName, type PhasePalette } from '../scripts/palette';
+
+  /* ══ Standard map phase-space hero ══════════════════
+     x' = x + y', y' = y + (K/2π)·sin(2πx)  (mod 1)
+     The portrait is a massive body in this phase space:
+     chaos points that wander close get captured into slow,
+     wobbly orbits around it, then escape back into the map.
+     Faithful port of the approved single-file version:
+     wrap (mod 1), very slow destination-out fade (α≈.01),
+     full clear every ~5 minutes. */
+  (function () {
+    const cv = document.getElementById('phase') as HTMLCanvasElement | null;
+    if (!cv) return;
+    const ctx = cv.getContext('2d')!;
+    const img = document.getElementById('portraitImg');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const K = 0.97, TAU = Math.PI * 2;
+    const MAX_ORBITING = 3, CAPTURE_P = 0.008;
+    const theme = (document.documentElement.getAttribute('data-theme') as ThemeName) || 'dark';
+    let W = 0, H = 0, pts: any[] = [], C: PhasePalette = PHASE_COLORS[theme];
+    const att = { x: 0, y: 0, r: 0, ok: false }; // the portrait, in device px
+    let orbiting = 0, tick = 0;
+
+    function locate() {
+      if (!img) { att.ok = false; return; }
+      const a = img.getBoundingClientRect(), b = cv!.getBoundingClientRect();
+      att.x = (a.left + a.width / 2 - b.left) * devicePixelRatio;
+      att.y = (a.top + a.height / 2 - b.top) * devicePixelRatio;
+      att.r = (a.width / 2) * devicePixelRatio;
+      att.ok = a.width > 0;
+    }
+    function resize() {
+      W = cv!.width = cv!.offsetWidth * devicePixelRatio;
+      H = cv!.height = cv!.offsetHeight * devicePixelRatio;
+      locate();
+    }
+    function newFree() { return { mode: 0, x: Math.random(), y: Math.random(), hot: Math.random() < 0.3 }; }
+    function seed() {
+      pts = []; orbiting = 0;
+      const N = Math.min(140, Math.floor(W / 14));
+      for (let i = 0; i < N; i++) pts.push(newFree());
+    }
+    function maybeCapture(p: any) {
+      if (reduced || !att.ok || orbiting >= MAX_ORBITING) return;
+      const dx = p.x * W - att.x, dy = p.y * H - att.y, d = Math.hypot(dx, dy);
+      if (d > att.r * 0.9 && d < att.r * 1.9 && Math.random() < CAPTURE_P) {
+        p.mode = 1;
+        p.hot = Math.random() < 0.5;
+        p.u = (Math.atan2(dy, dx) / TAU + 1) % 1;       // angle, in map units
+        p.v = Math.random();                             // local momentum
+        p.rr = d;                                        // start in place: no jump
+        p.life = 320 + Math.floor(Math.random() * 380);  // frames until escape
+        orbiting++;
+      }
+    }
+    function step(p: any) {
+      if (p.mode === 1) {            // captured: the standard map, wrapped around the portrait
+        p.v = (p.v + 0.12 * (K / TAU) * Math.sin(TAU * p.u)) % 1; if (p.v < 0) p.v += 1;
+        p.u = (p.u + (p.v - 0.5) * 0.012) % 1; if (p.u < 0) p.u += 1;
+        p.rr += (att.r * (1.10 + 0.55 * p.v) - p.rr) * 0.05;
+        const th = TAU * p.u;
+        p.px = att.x + p.rr * Math.cos(th);
+        p.py = att.y + p.rr * Math.sin(th);
+        if (--p.life <= 0 || !att.ok) { Object.assign(p, newFree()); orbiting--; }
+        return;
+      }
+      p.y = (p.y + (K / TAU) * Math.sin(TAU * p.x)) % 1; if (p.y < 0) p.y += 1;
+      p.x = (p.x + p.y) % 1;
+      maybeCapture(p);
+    }
+    function dot(p: any) {
+      ctx.fillStyle = p.hot ? C.hot : C.dot;
+      const s = (p.hot ? 1.3 : 0.9) * devicePixelRatio;
+      if (p.mode === 1) ctx.fillRect(p.px, p.py, s, s);
+      else ctx.fillRect(p.x * W, p.y * H, s, s);
+    }
+    function clear() { ctx.clearRect(0, 0, W, H); }
+    function frame() {
+      if (++tick % 45 === 0) locate();       // track layout shifts
+      if (tick % 18000 === 0) clear();       // ~5 min cycle: the picture builds for a long time
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,.01)';     // very slow multiplicative fade: the map paints itself
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
+      for (const p of pts) { step(p); dot(p); }
+      requestAnimationFrame(frame);
+    }
+    function paintStatic() {                 // reduced motion: pure map, drawn once
+      clear();
+      for (const p of pts) { for (let i = 0; i < 400; i++) { step(p); dot(p); } }
+    }
+    (window as any).__phaseLocate = locate;
+    (window as any).__phaseTheme = function (colors: PhasePalette) {  // theme switch repaint
+      C = colors;
+      if (reduced) { seed(); paintStatic(); } else { clear(); }
+    };
+    window.addEventListener('resize', () => { resize(); seed(); reduced ? paintStatic() : clear(); });
+
+    resize(); seed();
+    if (reduced) paintStatic(); else { clear(); frame(); }
+  })();
+
+  /* ══ Typewriter name ════════════════════════════════ */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = document.getElementById('typeName');
+    if (!el) return;
+    const full = el.textContent || ''; el.textContent = '';
+    let i = 0;
+    (function type() {
+      if (i >= full.length) return;          // caret keeps blinking forever
+      el.textContent += full[i];
+      const ch = full[i++];
+      const d = ch === '-' ? 210 : 55 + Math.random() * 90;  // human-ish rhythm
+      setTimeout(type, d);
+    })();
+  })();
+</script>

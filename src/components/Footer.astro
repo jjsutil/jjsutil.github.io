@@ -1,0 +1,20 @@
+---
+import { t } from '../data/i18n';
+---
+
+<footer id="contact">
+  <div class="foot-inner">
+    <p class="sec-label" data-i18n="c_label">{t('c_label')}</p>
+    <h2 data-i18n="c_h2">{t('c_h2')}</h2>
+    <div class="cta-row">
+      <a class="btn solid" href="https://calendly.com/jjsutilp/meet-juan" target="_blank" rel="noopener" data-i18n="c_btn">{t('c_btn')}</a>
+    </div>
+    <div class="contact-list">
+      <div><span>email</span><a href="mailto:juan@uc.cl">juan@uc.cl</a></div>
+      <div><span>linkedin</span><a href="https://www.linkedin.com/in/jjsutil/" target="_blank" rel="noopener">linkedin.com/in/jjsutil</a></div>
+      <div><span data-i18n="blog_label">{t('blog_label')}</span><a href="/blog/">~/blog →</a></div>
+      <div><span data-i18n="loc_label">{t('loc_label')}</span>Santiago, Chile 🇨🇱</div>
+    </div>
+    <p class="fin" data-i18n="fin" set:html={t('fin')} />
+  </div>
+</footer>

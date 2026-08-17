@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { t } from '../../data/i18n';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base title="Field notes — Juan Sutil Palma" description="Occasional writing by Juan Sutil Palma on software, machine learning and physics." swapTitle={false}>
+  <section class="blogwrap">
+    <p class="sec-label" data-i18n="blog_label">{t('blog_label')}</p>
+    <h2 data-i18n="blog_h2">{t('blog_h2')}</h2>
+    <p class="lede" data-i18n="blog_lede">{t('blog_lede')}</p>
+
+    {posts.length === 0 ? (
+      <div class="vault" data-i18n="blog_empty" set:html={t('blog_empty')} />
+    ) : (
+      <ul class="posts">
+        {posts.map((post) => (
+          <li>
+            <span class="mono date">{post.data.date.toISOString().slice(0, 10)}</span>
+            <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <p class="back mono"><a href="/" data-i18n="blog_back">{t('blog_back')}</a></p>
+  </section>
+</Base>
+
+<style>
+  .blogwrap{min-height:70vh;padding-top:130px}
+  .posts{margin-top:34px;list-style:none;display:flex;flex-direction:column;gap:14px}
+  .posts li{display:flex;gap:18px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .posts .date{color:var(--faint);font-size:.78rem}
+  .back{margin-top:48px;font-size:.82rem}
+</style>

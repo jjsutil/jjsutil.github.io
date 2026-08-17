@@ -1,0 +1,123 @@
+---
+import '@fontsource/space-grotesk/300.css';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import { t } from '../data/i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** landing swaps <title> on language toggle; inner pages keep theirs */
+  swapTitle?: boolean;
+}
+const {
+  title = t('title'),
+  description = 'Software Engineer trained in astronomy and physics education. Scalable products, scientific software, machine learning. Santiago, Chile.',
+  swapTitle = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Scalable products with a scientific edge. Private portfolio walkthroughs on request." />
+    <meta name="theme-color" content="#06080D" />
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%23FFA028"/></svg>' />
+    <script is:inline>
+      /* set theme before first paint to avoid flash; mark JS available for reveal styles */
+      (function () {
+        var t;
+        try { t = localStorage.getItem('jsp-theme'); } catch (e) {}
+        if (!t) {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.add('js');
+      })();
+    </script>
+  </head>
+  <body data-swap-title={swapTitle ? '1' : null}>
+    <div class="controls">
+      <button id="themeBtn" class="ctrl" aria-label="Toggle color theme">☀</button>
+      <button id="langBtn" class="ctrl lang" aria-label="Switch language / Cambiar idioma"
+        ><span class="on">EN</span><span class="off"> / ES</span></button
+      >
+    </div>
+
+    <slot />
+
+    <script>
+      import { T, type Lang } from '../data/i18n';
+      import { PHASE_COLORS, type ThemeName } from '../scripts/palette';
+
+      /* ── i18n ─────────────────────────────────── */
+      let lang: Lang;
+      let stored: string | null = null;
+      try { stored = localStorage.getItem('jsp-lang'); } catch (e) {}
+      lang = stored === 'en' || stored === 'es'
+        ? stored
+        : (navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en';
+
+      function applyLang(l: Lang) {
+        lang = l;
+        document.documentElement.lang = l;
+        if (document.body.dataset.swapTitle) document.title = T.title[l];
+        const cvBtn = document.getElementById('cvBtn');
+        if (cvBtn) cvBtn.setAttribute('href', l === 'es' ? '/cv/Juan_Sutil_CV_ES.pdf' : '/cv/Juan_Sutil_CV_EN.pdf');
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const k = el.getAttribute('data-i18n')!;
+          if (T[k]) el.innerHTML = T[k][l];
+        });
+        const btn = document.getElementById('langBtn')!;
+        btn.innerHTML = l === 'en'
+          ? '<span class="on">EN</span><span class="off"> / ES</span>'
+          : '<span class="off">EN / </span><span class="on">ES</span>';
+        try { localStorage.setItem('jsp-lang', l); } catch (e) {}
+      }
+      document.getElementById('langBtn')!.addEventListener('click', () => applyLang(lang === 'en' ? 'es' : 'en'));
+
+      /* ── Theme ────────────────────────────────── */
+      function currentTheme(): ThemeName {
+        return (document.documentElement.getAttribute('data-theme') as ThemeName) || 'dark';
+      }
+      function applyTheme(t: ThemeName) {
+        document.documentElement.setAttribute('data-theme', t);
+        document.getElementById('themeBtn')!.textContent = t === 'dark' ? '☀' : '☾';
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', PHASE_COLORS[t].bg);
+        (window as any).__phaseTheme?.(PHASE_COLORS[t]);
+        try { localStorage.setItem('jsp-theme', t); } catch (e) {}
+      }
+      document.getElementById('themeBtn')!.addEventListener('click', () => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+
+      /* ── Scroll reveal ────────────────────────── */
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12 },
+        );
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      }
+
+      /* ── Init ─────────────────────────────────── */
+      applyTheme(currentTheme());
+      applyLang(lang);
+    </script>
+  </body>
+</html>

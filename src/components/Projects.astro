@@ -1,0 +1,159 @@
+---
+import { t } from '../data/i18n';
+import { GROUPS } from '../data/projects';
+import Pin from './mocks/Pin.astro';
+import Talia from './mocks/Talia.astro';
+import Vi2bo from './mocks/Vi2bo.astro';
+import Speed from './mocks/Speed.astro';
+import Street from './mocks/Street.astro';
+import Pleamar from './mocks/Pleamar.astro';
+import Bioinfo from './mocks/Bioinfo.astro';
+import Queltehue from './mocks/Queltehue.astro';
+import Qr from './mocks/Qr.astro';
+import Concon from './mocks/Concon.astro';
+import Bootflower from './mocks/Bootflower.astro';
+import Onthemerge from './mocks/Onthemerge.astro';
+import Palomita from './mocks/Palomita.astro';
+import Juanos from './mocks/Juanos.astro';
+import S67 from './mocks/S67.astro';
+
+const MOCKS: Record<string, any> = {
+  pin: Pin, talia: Talia, vi2bo: Vi2bo, speed: Speed, street: Street,
+  pleamar: Pleamar, bioinfo: Bioinfo, queltehue: Queltehue, qr: Qr,
+  concon: Concon, bootflower: Bootflower, onthemerge: Onthemerge,
+  palomita: Palomita, juanos: Juanos, s67: S67,
+};
+const DEFAULT = 'pin';
+---
+
+<section id="projects">
+  <p class="sec-label" data-i18n="p_label">{t('p_label')}</p>
+  <h2 data-i18n="p_h2">{t('p_h2')}</h2>
+
+  <div class="vault reveal" data-i18n="vault" set:html={t('vault')} />
+  <p class="xp-hint mono" data-i18n="explorer_hint" aria-hidden="true">{t('explorer_hint')}</p>
+
+  <div class="xp reveal" id="explorer">
+    {GROUPS.map((group) => (
+      <>
+        <p class="xp-group mono" data-i18n={group.key}>{t(group.key)}</p>
+        {group.projects.map((p) => {
+          const Mock = MOCKS[p.id];
+          const selected = p.id === DEFAULT;
+          return (
+            <>
+              <button
+                class:list={['xp-row', { sel: selected }]}
+                id={`proj-${p.id}`}
+                aria-expanded={selected ? 'true' : 'false'}
+                aria-controls={`panel-${p.id}`}
+                data-proj={p.id}
+              >
+                <span class="xp-name">{p.name}{p.lock && <span class="lock" aria-label="private"> 🔒</span>}</span>
+                <span class="xp-tag mono" data-i18n={`pt_${p.k}`}>{t(`pt_${p.k}`)}</span>
+                <span class={`status ${p.state}`} data-i18n={`ps_${p.k}`}>{t(`ps_${p.k}`)}</span>
+              </button>
+              <div
+                class:list={['xp-panel', { on: selected }]}
+                id={`panel-${p.id}`}
+                role="region"
+                aria-labelledby={`proj-${p.id}`}
+                hidden={!selected}
+              >
+                <div class="mock"><Mock /></div>
+                <p class="xp-body" data-i18n={`pb_${p.k}`} set:html={t(`pb_${p.k}`)} />
+                <p class="stack">{p.stack}</p>
+                <a class="ask mono" href={`mailto:juan@uc.cl?subject=${encodeURIComponent(p.mailSubject)}`} data-i18n="ask">{t('ask')}</a>
+              </div>
+            </>
+          );
+        })}
+      </>
+    ))}
+  </div>
+</section>
+
+<style>
+  .xp-hint{margin-top:26px;font-size:.72rem;color:var(--faint);letter-spacing:.04em}
+  .xp{margin-top:14px}
+
+  .xp-group{
+    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+    margin-top:26px;padding-bottom:8px;border-bottom:1px dashed var(--line);
+  }
+  .xp-group:first-child{margin-top:0}
+
+  .xp-row{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:baseline;
+    width:100%;text-align:left;cursor:pointer;
+    background:none;border:none;border-left:2px solid transparent;border-bottom:1px solid var(--line);
+    padding:13px 10px 13px 14px;color:var(--paper);font:inherit;
+    transition:border-color .15s,background .15s;
+  }
+  .xp-row:hover{background:color-mix(in srgb,var(--ink) 70%,transparent);border-left-color:var(--faint)}
+  .xp-row.sel{background:var(--ink);border-left-color:var(--ember)}
+  .xp-name{font-size:1.02rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xp-row.sel .xp-name{color:var(--ember)}
+  .xp-name .lock{color:var(--faint);font-size:.8rem;font-weight:400}
+  .xp-tag{grid-row:2;font-size:.66rem;color:var(--faint);letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xp-row .status{grid-column:2;grid-row:1 / span 2;align-self:center}
+
+  .xp-panel{padding:20px 4px 30px;display:flex;flex-direction:column;gap:14px}
+  .xp-panel .xp-body{color:var(--faint);font-size:.95rem;max-width:58ch}
+  .xp-panel :global(.xp-body strong){color:var(--ember);font-weight:500}
+  .xp-panel :global(.xp-body a){color:var(--paper);border-bottom:1px dotted var(--faint)}
+  .xp-panel .ask{font-size:.78rem}
+
+  /* desktop: master list left, sticky detail right; DOM stays interleaved */
+  @media(min-width:861px){
+    .xp{display:grid;grid-template-columns:minmax(0,42%) minmax(0,1fr);column-gap:34px}
+    .xp-group,.xp-row{grid-column:1}
+    /* all panels share the same right-hand area; only the selected one is visible */
+    .xp-panel{grid-column:2;grid-row:1 / span 99;align-self:start;position:sticky;top:72px;padding:0 0 20px}
+  }
+
+  @media(max-width:520px){
+    .xp-tag{display:none}
+    .xp-row{padding:12px 8px 12px 12px}
+  }
+</style>
+
+<script>
+  /* Master-detail explorer: exactly one project selected; ↑/↓ browse.
+     On mobile the panel expands under its row (same DOM, CSS relocates it on desktop). */
+  (function () {
+    const xp = document.getElementById('explorer');
+    if (!xp) return;
+    const rows = Array.from(xp.querySelectorAll<HTMLButtonElement>('.xp-row'));
+
+    function select(row: HTMLButtonElement, focus = false) {
+      rows.forEach((r) => {
+        const on = r === row;
+        r.classList.toggle('sel', on);
+        r.setAttribute('aria-expanded', String(on));
+        const panel = document.getElementById(r.getAttribute('aria-controls')!)!;
+        panel.classList.toggle('on', on);
+        panel.hidden = !on;
+      });
+      if (focus) row.focus();
+    }
+
+    rows.forEach((row, i) => {
+      row.addEventListener('click', () => select(row));
+      row.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+        e.preventDefault();
+        const next = rows[(i + (e.key === 'ArrowDown' ? 1 : -1) + rows.length) % rows.length];
+        select(next, true);
+      });
+    });
+
+    /* deep links (#proj-<id>), e.g. palomita's body linking its sister queltehue */
+    function fromHash() {
+      const row = /^#proj-/.test(location.hash) && document.getElementById(location.hash.slice(1));
+      if (row && rows.includes(row as HTMLButtonElement)) select(row as HTMLButtonElement, true);
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  })();
+</script>

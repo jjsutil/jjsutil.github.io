@@ -1,0 +1,154 @@
+/* ── Tokens (approved palette) ─────────────────── */
+:root{
+  --void:#06080D;
+  --ink:#0D1117;
+  --line:#212938;
+  --paper:#E6EDF3;
+  --faint:#7D8798;
+  --ember:#FFA028;
+  --rust:#E5652E;
+  --ok:#3FB950;
+  --max:1060px;
+}
+[data-theme="light"]{
+  --void:#F5F2EA;
+  --ink:#FFFFFF;
+  --line:#DCD5C6;
+  --paper:#161B26;
+  --faint:#5A6172;
+  --ember:#C05C10;
+  --rust:#A8430F;
+  --ok:#1F8A4C;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--void);
+  color:var(--paper);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  font-weight:300;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease;
+}
+.mono{font-family:'IBM Plex Mono',monospace}
+a{color:var(--ember);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+::selection{background:var(--ember);color:var(--void)}
+
+/* ── Fixed controls (theme + language) ─────────── */
+.controls{position:fixed;top:16px;right:16px;z-index:60;display:flex;gap:8px}
+.ctrl{
+  font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.04em;
+  color:var(--paper);background:color-mix(in srgb,var(--void) 70%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--line);padding:7px 12px;cursor:pointer;transition:border-color .2s;
+}
+.ctrl:hover{border-color:var(--ember)}
+.lang .on{color:var(--ember);font-weight:500}
+.lang .off{color:var(--faint)}
+
+/* ── Hero ──────────────────────────────────────── */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+#phase{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 24px;width:100%;display:flex;align-items:center;gap:64px}
+.hero-copy{flex:1 1 520px;min-width:0}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.14em;color:var(--ember);text-transform:uppercase;margin-bottom:18px}
+.eyebrow::before{content:"~/ ";color:var(--faint)}
+.caret{display:inline-block;margin-left:2px;color:var(--paper);animation:caret-blink 1.06s steps(1,end) infinite}
+@keyframes caret-blink{0%,55%{opacity:1}56%,100%{opacity:0}}
+h1{font-size:clamp(2.4rem,6.4vw,4.4rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;max-width:15ch}
+.sub{margin-top:22px;max-width:52ch;font-size:1.12rem;color:var(--faint)}
+.sub strong{color:var(--paper);font-weight:500}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:38px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 22px;border:1px solid var(--ember);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem;letter-spacing:.02em;
+  transition:background .18s,color .18s,border-color .18s,transform .12s}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+.btn svg{width:16px;height:16px;flex:0 0 auto;fill:currentColor}
+.btn.solid{background:var(--ember);color:var(--void);font-weight:500}
+.btn.solid:hover{background:var(--paper);border-color:var(--paper)}
+.btn.ghost{color:var(--paper);border-color:var(--line);background:color-mix(in srgb,var(--ink) 55%,transparent)}
+.btn.ghost:hover{border-color:var(--ember);color:var(--ember)}
+.btn.sq{width:46px;padding:0;justify-content:center}
+.btn.cvbtn{padding:0 16px;font-weight:500}
+.hero-note{position:absolute;bottom:22px;right:26px;z-index:2;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--faint)}
+
+/* portrait */
+.portrait{flex:0 0 auto;width:min(272px,58vw);aspect-ratio:1;position:relative}
+.portrait img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--ember);display:block;position:relative;z-index:1}
+@media(max-width:820px){.portrait{display:none}}
+
+/* ── Sections ──────────────────────────────────── */
+section{max-width:var(--max);margin:0 auto;padding:88px 24px}
+#life{padding-top:0}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
+.sec-label::before{content:"── ";color:var(--line)}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:500;letter-spacing:-.01em;margin-bottom:20px}
+.lede{max-width:62ch;color:var(--faint);font-size:1.05rem}
+.lede strong{color:var(--paper);font-weight:500}
+
+.vault{margin-top:34px;border:1px dashed var(--rust);padding:20px 24px;font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--paper);background:color-mix(in srgb,var(--rust) 7%,transparent)}
+.vault b{color:var(--ember);font-weight:500}
+
+/* status colors + stack line (shared by project panels) */
+.status{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.05em;white-space:nowrap}
+.status.build{color:var(--ember)}
+.status.done{color:var(--ok)}
+.status.plan{color:var(--faint)}
+.stack{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--faint);letter-spacing:.02em}
+.stack::before{content:"# ";color:var(--rust)}
+
+/* ── Mock stage: paused by default, runs when its panel is selected ── */
+.mock{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:color-mix(in srgb,var(--void) 55%,transparent)}
+.mock svg{width:100%;height:auto;display:block;font-family:'IBM Plex Mono',monospace}
+.mock *{animation-play-state:paused}
+.xp-panel.on .mock *{animation-play-state:running}
+
+/* ── Track record ──────────────────────────────── */
+.track{margin-top:44px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line)}
+.row .when{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--faint);padding-top:4px}
+.row h3{font-size:1.1rem;font-weight:500}
+.row h3 span{color:var(--ember)}
+.row p{color:var(--faint);font-size:.95rem;margin-top:6px;max-width:64ch}
+.row .more{display:inline-block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:.78rem}
+@media(max-width:640px){.row{grid-template-columns:1fr;gap:6px}}
+
+/* ── Three lenses ──────────────────────────────── */
+.lenses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px}
+.lens{border-left:2px solid var(--ember);padding:6px 0 6px 20px}
+.lens h3{font-size:1rem;font-weight:500;margin-bottom:6px}
+.lens h3 em{font-family:'IBM Plex Mono',monospace;font-style:normal;color:var(--ember);font-size:.8rem;margin-right:8px}
+.lens p{color:var(--faint);font-size:.92rem}
+
+/* ── Footer ────────────────────────────────────── */
+footer{border-top:1px solid var(--line);background:var(--ink)}
+.foot-inner{max-width:var(--max);margin:0 auto;padding:80px 24px}
+footer h2{max-width:22ch}
+.contact-list{margin-top:30px;display:flex;flex-direction:column;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:.92rem}
+.contact-list span{color:var(--faint);display:inline-block;width:120px}
+.fin{margin-top:60px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--faint)}
+
+/* ── Scroll reveal (JS-gated so content never hides without JS) ── */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:840px){
+  .hero{min-height:auto}
+  .hero-inner{flex-direction:column-reverse;align-items:flex-start;gap:36px;padding-top:110px;padding-bottom:80px}
+  .portrait{width:156px}
+}
+@media(max-width:700px){.hero-note{display:none}}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .caret{animation:none;opacity:1}
+  body{transition:none}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  /* mocks become complete still scenes: no keyframes, everything visible */
+  .mock *{animation:none!important;opacity:1!important}
+}
